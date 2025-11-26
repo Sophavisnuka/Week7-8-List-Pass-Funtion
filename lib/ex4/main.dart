@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'data/jokes.dart';
 
-Color appColor = Colors.green[300] as Color;
-
-void main() => runApp(MaterialApp(home: JokeListScreen()));
+void main() => runApp(
+  MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        title: Text('Favorite jokes', style: TextStyle(color: Colors.white),),
+      ),
+      body: JokeListScreen(),
+    ),
+  ),
+);
 
 class JokeListScreen extends StatefulWidget {
 
@@ -20,30 +29,25 @@ class _JokeListScreenState extends State<JokeListScreen> {
 
   void setFavorite(int index) {
     setState(() {
-      favoriteIndex = index; // only 1 favorite
+      if (favoriteIndex == index) {
+        favoriteIndex = null; //click un favorite
+      } else {
+        favoriteIndex = index;
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: appColor,
-        title: const Text("Favorite Jokes"),
-      ),
-
-      // Scrollable !!
-      body: ListView.builder(
-        itemCount: jokes.length,
-        itemBuilder: (context, index) {
-          return FavoriteCard(
-            joke: jokes[index],
-            isFavorite: favoriteIndex == index,
-            onFavoriteClick: () => setFavorite(index),
-          );
-        },
-      ),
+    return ListView.builder(
+      itemCount: jokes.length,
+      itemBuilder: (context, index) {
+        return FavoriteCard(
+          joke: jokes[index],
+          isFavorite: favoriteIndex == index,
+          onFavoriteClick: () => setFavorite(index),
+        );
+      },
     );
   }
 }
@@ -80,7 +84,7 @@ class FavoriteCard extends StatelessWidget {
                 Text(
                   joke.title,
                   style: TextStyle(
-                    color: appColor,
+                    color: Colors.green,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
