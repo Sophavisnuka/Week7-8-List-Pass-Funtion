@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../model/profile_tile_model.dart';
 
 ProfileData ronanProfile = ProfileData(
